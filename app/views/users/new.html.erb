@@ -1,0 +1,47 @@
+<head></head>
+<body>
+<h1>Signup</h1>
+
+
+<!--THIS IS ONLY IF JAVASCRIPT IS DISABLED; OTHEWISE HTML5 WILL HANDLE ERRORS-->
+<%= form_for(@user) do |f| %>
+    <% @user.errors.full_messages.each do |error| %>
+        <%= error %><br>
+    <%end%>
+<!----------------------------------------------------------------------------->
+
+<%= f.label :username, "Username"%><br>
+<%= f.text_field :username, required: true, :input_html => {:minlength => 3 , maxlength: 22}, :placeholder => "Username"%><br>
+
+<%= f.label :email, "E-mail"%><br>
+<%= f.email_field :email, required: true, :placeholder => "E-mail" %><br>
+<%= f.label :password, "Password"%><br>
+<%= f.password_field :password, required: true, :input_html => {:minlength => 8}, :placeholder => "Password"%><br>
+<%= f.label :password_confirmation, "Confirm password"%><br>
+<%= f.password_field :password_confirmation, required: true, :placeholder => "Confirm password"%><br>
+<%= f.submit "Register" %><br>
+<a href="/">Login instead?</a>
+<% end %>
+
+
+
+<script>
+var password = document.getElementById("user_password");
+var confirm_password = document.getElementById("user_password_confirmation");
+
+function validatePassword(){
+    if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+validateUsername();
+validatePassword();
+</script>
+</body>
+

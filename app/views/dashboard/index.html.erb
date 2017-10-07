@@ -1,0 +1,68 @@
+<h2>Dashboard  for user <strong><%=@current_user.username%></strong></h2>
+<a href="/roleplay/new">Create new roleplay...</a><br>
+<%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+
+<% if @own_roleplays != [] %>
+    <h3>My own roleplays</h3>
+    <hr>
+     <% @own_roleplays.each do |roleplay| %>
+        <strong><%= roleplay.name %></strong>
+      <%= image_tag roleplay.image.url(:thumb) %><br>
+      <% if !roleplay.online %>
+        <%= button_to "delete", roleplay, method: :delete %>
+      <% end %>
+      <% roleplay_characters = roleplay.characters %>
+      <% if roleplay_characters == [] %>
+            <em>This roleplay does not have any characters.</em>
+      <% else %>
+      <% roleplay_characters.each do |character| %>
+                <h5><%= character.name %></h5>
+                <% if character.user == nil %>
+                    Unclaimed<br>
+                    <% if !roleplay.online %>
+                      <%= button_to "claim", controller: :characters, action: :claim, method: :post, character: character%>
+                      <%= form_tag(controller: "characters", method: "post", action: "assign") do %>
+                          <%= label_tag(:username, "Username") %>
+                          <%= text_field_tag(:username) %>
+                          <%= hidden_field_tag(:character, value=character.id) %>
+                          <%= submit_tag("Assign") %>
+                      <% end %>
+                    <% end %>
+                <% else %>
+                    (owner: <%=character.user.username%>)<br>
+                    <% if !roleplay.online %>
+                        <%= button_to "unbind", controller: :characters, action: :unbind, method: :post, character: character%>
+                    <% end %>
+                <% end %>
+                <%= image_tag character.image(:thumb) %><br>
+                <% if !roleplay.online %>
+                  <%= button_to "remove", character, method: :delete %>
+                <% end %>
+      <% end %>
+      <% end %>
+
+
+      <% if !roleplay.online %>
+        <%= form_tag({controller: "characters", method: "post", action: "create"},{multipart: true}) do %>
+            <%= label_tag :name, "Character name"                                 %>
+            <%= text_field_tag :name                                              %>
+            <%= label_tag :description, "Character description"                   %>
+            <%= text_field_tag :description                                       %>
+            <%= file_field_tag :image, accept: 'image/png,image/gif,image/jpeg'   %>
+            <%= hidden_field_tag :roleplay, value=roleplay.id                     %>
+            <%= submit_tag "Create"                                               %>
+        <% end %>
+      <% end %>
+        <% if roleplay.online %>
+            This roleplay is online.
+            <%= button_to 'stop', controller: :roleplays, action: :stop, method: :post, id: roleplay.id%>
+            <%= link_to 'enter', controller: :roleplays, action: :show, id: roleplay.id %>
+        <% else %>
+            This roleplay is offline.
+            <%= button_to 'start', controller: :roleplays, action: :start, method: :post, id: roleplay.id%>
+        <% end %>
+        <hr>
+    <% end %>
+<% else %>
+    <br><em>You do not own any roleplays.</em>
+<% end %>

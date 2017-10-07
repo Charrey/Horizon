@@ -1,0 +1,15 @@
+current directory: /home/charrey/Documents/Horizon/vendor/cache/ruby/2.4.0/gems/websocket-driver-0.6.5/ext/websocket-driver
+/home/charrey/.rvm/rubies/ruby-2.4.1/bin/ruby -r ./siteconf20170930-9162-1nkfdn9.rb extconf.rb
+creating Makefile
+
+current directory: /home/charrey/Documents/Horizon/vendor/cache/ruby/2.4.0/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /home/charrey/Documents/Horizon/vendor/cache/ruby/2.4.0/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.so
+
+current directory: /home/charrey/Documents/Horizon/vendor/cache/ruby/2.4.0/gems/websocket-driver-0.6.5/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -m 0755 websocket_mask.so ./.gem.20170930-9162-10ohr5e

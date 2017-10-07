@@ -1,0 +1,37 @@
+<%= javascript_include_tag 'cable', 'data-turbolinks-track': 'reload' %>
+
+
+<%= link_to "Back to dashboard", "/dashboard" %>
+<h1><%= @roleplay.name %></h1>
+<p> <%= @roleplay.description %></p>
+
+<h2>Characters:</h2><br>
+<hr>
+<% @roleplay.characters.each do |char| %>
+    <%= char.name        %>             <br>
+    <%= char.description %>             <br>
+    <% if char.user %>
+    Owned by: <%= char.user %>          <br>
+    <% else %>
+    <em>Unowned</em>                    <br>
+    <% end %>
+    <hr>
+
+<% end %>
+
+<div id="messages" data-roleplay-id="<%= @roleplay.id %>">
+  <%= render @roleplay.messages %>
+</div>
+
+<hr>
+
+<%= form_for @message, url: '#', remote: true, id: 'new_message' do |f| %>
+    <%= hidden_field_tag 'roleplay_id', @roleplay.id %>
+    <div class="form-group">
+      <%= f.label :body %>
+      <%= f.text_area :body, class: 'form-control' %>
+      <small class="text-muted">From 2 to 1000 characters</small>
+    </div>
+
+    <%= f.submit "Post", class: 'btn btn-primary btn-lg' %>
+<% end %>
