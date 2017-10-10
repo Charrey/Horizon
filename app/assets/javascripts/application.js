@@ -15,9 +15,7 @@
 //= require jquery.turbolinks
 //= require rails-ujs
 //= require turbolinks
-//= require_tree
 //= require cable
 //= require popper
 //= require bootstrap.min
 //= require bootstrap-sprockets
-//= require_tree
