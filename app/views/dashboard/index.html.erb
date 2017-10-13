@@ -14,7 +14,7 @@
 
      <% current_user.roleplays.each do |roleplay| %>
         <strong><%= roleplay.name %></strong><br>
-      <%= image_tag roleplay.image.url(:thumb) %><br>
+      <%= image_tag roleplay.image.url(:thumb, class: "rounded") %><br>
       <% if !roleplay.online %>
         <%= button_to 'delete', roleplay, method: :delete %>
       <% end %>
@@ -88,7 +88,7 @@
       <div class="card roleplay-card" >
         <div class="row">
           <div class="col-3">
-            <%= image_tag(roleplay.image(:thumb)) %>
+            <%= image_tag(roleplay.image(:thumb), class: "rounded") %>
           </div>
 
           <div class="col-9">
@@ -98,7 +98,7 @@
                 <% if roleplay.online %>
                 <a href="/roleplays/<%=roleplay.id%>"><%= roleplay.name %></a>
                     <% else %>
-                 <p class="text-muted"><%= roleplay.name %></p>
+                 <div class="text-muted"><%= roleplay.name %></div>
                     <% end %>
               </h5>
             </div>

@@ -38,6 +38,10 @@ class RoleplaysController < ApplicationController
     redirect_to '/dashboard'
   end
 
+  def edit
+    @roleplay = Roleplay.find(params[:id])
+  end
+
   private
 
   def roleplay_params

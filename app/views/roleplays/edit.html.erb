@@ -1,0 +1,25 @@
+<h2>Settings for roleplay <strong><%=@roleplay.name%></strong></h2>
+
+<div class="row">
+  <div class="col-1">
+    <!-- lol-whitespace-->
+  </div>
+  <div class="col-4">
+    <% @roleplay.characters.each do |character| %>
+      <div class="card roleplay-card" >
+        <div class="row">
+          <div class="col-3">
+            <%= image_tag(character.image(:thumb)) %>
+          </div>
+          <div class="col-9">
+            <div class="center-in-me-please">
+              <h5 class="card-text">
+                    <%= character.name %>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

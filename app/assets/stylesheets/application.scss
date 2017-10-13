@@ -14,3 +14,9 @@
  *= require_self
  */
 @import "bootstrap";
+
+.center-in-me-please > * {
+  height: 100px;
+  display: table-cell;
+  vertical-align: middle;
+}
