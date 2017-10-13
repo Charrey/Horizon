@@ -10,6 +10,10 @@
 User.create!([{username: "alice", email: "alice@email.com", password: "password", password_confirmation: "password"}])
 User.create!([{username: "bob",   email: "bob@email.com",   password: "password", password_confirmation: "password"}])
 Roleplay.create!([{ user: User.find_by_username("alice"), name: "Overwatch (18+ only)", image: File.new(File.join(Rails.root, "/app/assets/images/seed/Overwatch.png")),   description: "Only for 18+ people"}])
-Roleplay.create!([{ user: User.find_by_username("bob"),   name: "Drakonite",            image: File.new(File.join(Rails.root, "/app/assets/images/seed/dragon_icon.jpg")), description: "Very good medieval RP"}])
+Roleplay.create!([{ user: User.find_by_username("bob"),   name: "Drakonite",            image: File.new(File.join(Rails.root, "/app/assets/images/seed/dragon_icon.jpg")), description: "Very good medieval RP", online: true}])
+Roleplay.create!([{ user: User.find_by_username("bob"),   name: "Jerma Rumble",         image: File.new(File.join(Rails.root, "/app/assets/images/seed/jerma.jpg")),       description: "Reenactment of the Jerma Rumble"}])
+
 Character.create!([{user: User.find_by_username("alice"), name: "Widowmaker",           image: File.new(File.join(Rails.root, "/app/assets/images/seed/widowmaker.jpg")),  description: "French person that is actually also evil",   roleplay: Roleplay.find_by_name("Overwatch (18+ only)")}])
+Character.create!([{user: User.find_by_username("alice"), name: "Reaper",               image: File.new(File.join(Rails.root, "/app/assets/images/seed/reaper.jpg")),      description: "Half-dead evil person",                      roleplay: Roleplay.find_by_name("Overwatch (18+ only)")}])
 Character.create!([{user: User.find_by_username("alice"), name: "Mary",                 image: File.new(File.join(Rails.root, "/app/assets/images/seed/mary_square.jpg")), description: "Attractive and capable member of the Guard", roleplay: Roleplay.find_by_name("Drakonite")}])
+Character.create!([{user: User.find_by_username("alice"), name: "Glue Man de Grossi",   image: File.new(File.join(Rails.root, "/app/assets/images/seed/glueman.png")),     description: "Really weird looking guy.",                  roleplay: Roleplay.find_by_name("Jerma Rumble")}])

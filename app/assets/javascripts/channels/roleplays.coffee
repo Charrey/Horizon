@@ -9,7 +9,7 @@ jQuery(document).on 'turbolinks:load', ->
 # Called when the subscription is ready for use on the server
 
       disconnected: ->
-        
+
 
       received: (data) ->
         shouldScroll = messages.scrollTop + messages.clientHeight == messages.scrollHeight;

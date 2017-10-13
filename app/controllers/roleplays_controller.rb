@@ -1,5 +1,5 @@
 class RoleplaysController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create destroy start stop]
+  before_action :authenticate_user!, only: %i[new create destroy start stop show]
 
   def new
     @roleplay = Roleplay.new

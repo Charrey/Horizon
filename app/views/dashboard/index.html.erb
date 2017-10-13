@@ -92,13 +92,15 @@
           <div class="row">
             <div class="col-8">
               <h5 class="card-text">
-                <%= roleplay.name %>
+                <% if roleplay.online %>
+                <a href="/roleplays/<%=roleplay.id%>"><%= roleplay.name %></a>
+                    <% else %>
+                 <p class="text-muted"><%= roleplay.name %></p>
+                    <% end %>
               </h5>
-              <br>
-              <%= link_to 'enter', controller: :roleplays, action: :show, id: roleplay.id %>
             </div>
             <div class="col-4">
-              <h5 class="card-text">
+              <h5 class="card-text<%= roleplay.online ? "" : ' text-muted'%>">
                 <%=amount%>
               </h5>
           </div>
