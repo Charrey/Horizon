@@ -5,7 +5,6 @@ class RoleplaysController < ApplicationController
     @roleplay = Roleplay.new
   end
 
-
   def create
     roleplay = Roleplay.new(roleplay_params.merge(user: current_user, online: false))
     if roleplay.save
@@ -15,7 +14,6 @@ class RoleplaysController < ApplicationController
     end
   end
 
-
   def show
     @roleplay = Roleplay.includes(:characters).find(params[:id])
     @my_characters = @roleplay.characters.where(user: current_user.id)
@@ -24,19 +22,19 @@ class RoleplaysController < ApplicationController
 
   def destroy
     roleplay = Roleplay.find(params[:roleplay_id])
-    roleplay.destroy!
+    roleplay.destroy! if roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
   def start
     roleplay = Roleplay.find(params[:id])
-    roleplay.update!(online: true)
+    roleplay.update!(online: true) if roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
   def stop
     roleplay = Roleplay.find(params[:id])
-    roleplay.update!(online: false)
+    roleplay.update!(online: false) if roleplay.user == current_user
     redirect_to '/dashboard'
   end
 

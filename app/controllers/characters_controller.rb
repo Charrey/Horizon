@@ -15,27 +15,26 @@ class CharactersController < ApplicationController
 
 
   def claim
-    character = Character.find(params[:character])
-    character.update(user: current_user)
+    character = Character.includes(roleplay: [:user]).find(params[:character])
+    character.update(user: current_user) if character.roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
   def destroy
-    character = Character.find(params[:character])
-    character.destroy!
+    character = Character.includes(roleplay: [:user]).find(params[:character])
+    character.destroy! if character.roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
   def unbind
-    character = Character.find(params[:character])
-    character.update(user: nil)
+    character = Character.includes(roleplay: [:user]).find(params[:character])
+    character.update(user: nil) if character.roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
   def assign
-    character = Character.find(params[:character])
-    user = User.find_by_username(params[:username])
-    character.update(user: user)
+    character = Character.includes(roleplay: [:user]).find(params[:character])
+    character.update(user: User.find_by_username(params[:username])) if character.roleplay.user == current_user
     redirect_to '/dashboard'
   end
 
