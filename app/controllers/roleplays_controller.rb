@@ -18,12 +18,8 @@ class RoleplaysController < ApplicationController
 
   def show
     @roleplay = Roleplay.includes(:characters).find(params[:id])
-    @message = Message.new
     @my_characters = @roleplay.characters.where(user: current_user.id)
-  end
-
-  def saveMessage
-    @message.save!
+    @message = Message.new
   end
 
   def destroy
