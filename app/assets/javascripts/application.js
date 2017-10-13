@@ -18,6 +18,5 @@
 //= require cable
 //= require popper
 //= require_tree
+//= require bootstrap
 //= require bootstrap.min
-//= require bootstrap-sprockets
-//= require bootstrap-modal
