@@ -12,3 +12,4 @@ User.create!([{username: "bob", email: "bob@email.com", password: "password", pa
 Roleplay.create!([{user: User.find_by_username("alice"), name: "Overwatch (18+ only)", image: File.new("/home/charrey/Desktop/sample.png"), description: "Only for 18+ people"}])
 Roleplay.create!([{user: User.find_by_username("bob"), name: "Drakonite", image: File.new("/home/charrey/Desktop/sample.png"), description: "Very good medieval RP"}])
 Character.create!([{name: "Widowmaker", description: "French person that is actually also evil", user: User.find_by_username("alice"), roleplay: Roleplay.find_by_name("Overwatch (18+ only)")}])
+Character.create!([{name: "Mary", description: "Attractive and capable member of the Guard", user: User.find_by_username("alice"), roleplay: Roleplay.find_by_name("Drakonite")}])

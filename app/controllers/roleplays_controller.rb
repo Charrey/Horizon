@@ -2,12 +2,12 @@ class RoleplaysController < ApplicationController
   before_action :authenticate_user!, only: %i[new create destroy start stop]
 
   def new
-    @roleplay = Roleplay.new()
+    @roleplay = Roleplay.new
   end
 
 
   def create
-    roleplay = Roleplay.new(roleplay_params.merge(user: @current_user, online: false))
+    roleplay = Roleplay.new(roleplay_params.merge(user: current_user, online: false))
     if roleplay.save
       redirect_to '/dashboard'
     else
@@ -17,8 +17,9 @@ class RoleplaysController < ApplicationController
 
 
   def show
-    @roleplay = Roleplay.find(params[:id])
+    @roleplay = Roleplay.includes(:characters).find(params[:id])
     @message = Message.new
+    @my_characters = @roleplay.characters.where(user: current_user.id)
   end
 
   def saveMessage
@@ -26,8 +27,8 @@ class RoleplaysController < ApplicationController
   end
 
   def destroy
-    roleplay = Roleplay.find(params[:id])
-    roleplay.destroy
+    roleplay = Roleplay.find(params[:roleplay_id])
+    roleplay.destroy!
     redirect_to '/dashboard'
   end
 

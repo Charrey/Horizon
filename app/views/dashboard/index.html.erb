@@ -2,14 +2,18 @@
 <a href="/roleplay/new">Create new roleplay...</a><br>
 <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
 
-<% if @own_roleplays != [] %>
-    <h3>My own roleplays</h3>
-    <hr>
-     <% @own_roleplays.each do |roleplay| %>
-        <strong><%= roleplay.name %></strong>
+
+<div class="row">
+<div class="col-4">
+  <h3>My own roleplays</h3>
+  <hr>
+<% if current_user.roleplays != [] %>
+
+     <% current_user.roleplays.each do |roleplay| %>
+        <strong><%= roleplay.name %></strong><br>
       <%= image_tag roleplay.image.url(:thumb) %><br>
       <% if !roleplay.online %>
-        <%= button_to "delete", roleplay, method: :delete %>
+        <%= button_to 'delete', roleplay, method: :delete %>
       <% end %>
       <% roleplay_characters = roleplay.characters %>
       <% if roleplay_characters == [] %>
@@ -66,3 +70,47 @@
 <% else %>
     <br><em>You do not own any roleplays.</em>
 <% end %>
+</div>
+
+
+
+
+
+<div class="col-4">
+  <h3>My Participations</h3>
+  <hr>
+  <% @participations.each do |roleplay, amount| %>
+
+
+      <div class="card roleplay-card" >
+        <div class="row">
+          <div class="col-3">
+            <%= image_tag(roleplay.image(:thumb)) %>
+          </div>
+
+          <div class="col-9">
+          <div class="row">
+            <div class="col-8">
+              <h5 class="card-text">
+                <%= roleplay.name %>
+              </h5>
+              <br>
+              <%= link_to 'enter', controller: :roleplays, action: :show, id: roleplay.id %>
+            </div>
+            <div class="col-4">
+              <h5 class="card-text">
+                <%=amount%>
+              </h5>
+          </div>
+          </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+  <% end %>
+</div>
+</div>

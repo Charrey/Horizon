@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post '/roleplays/start/:id' => 'roleplays#start'
   post '/roleplays/stop/:id' => 'roleplays#stop'
   resources :users
-  resources :roleplays, only: [:new, :show, :index]
+  resources :roleplays, only: [:new, :create, :show]
   resources :characters
   mount ActionCable.server => '/cable'
 end

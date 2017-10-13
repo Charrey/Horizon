@@ -1,10 +1,11 @@
 <%= javascript_include_tag 'cable', 'data-turbolinks-track': 'reload' %>
-
+<%= javascript_include_tag 'roleplays' %>
 
 <%= link_to "Back to dashboard", "/dashboard" %>
 <h1><%= @roleplay.name %></h1>
 <p> <%= @roleplay.description %></p>
 
+<!--
 <h2>Characters:</h2><br>
 <hr>
 <% @roleplay.characters.each do |char| %>
@@ -17,7 +18,20 @@
     <% end %>
     <hr>
 
-<% end %>
+<% end %>-->
+
+<div class="row">
+
+
+  <div class="col-2">
+    <% @roleplay.characters.each do |character| %>
+    <%= character.name %><br>
+    <% end %>
+  </div>
+
+
+  <!-- column for actual chatting-->
+  <div class="col-8">
 
 <div id="messages" data-roleplay-id="<%= @roleplay.id %>">
   <%= render @roleplay.messages %>
@@ -27,11 +41,43 @@
 
 <%= form_for @message, url: '#', remote: true, id: 'new_message' do |f| %>
     <%= hidden_field_tag 'roleplay_id', @roleplay.id %>
+    <%= hidden_field_tag 'character_id', -1, id: 'character_id_field' %>
     <div class="form-group">
       <%= f.label :body %>
       <%= f.text_area :body, class: 'form-control' %>
       <small class="text-muted">From 2 to 1000 characters</small>
     </div>
 
-    <%= f.submit "Post", class: 'btn btn-primary btn-lg' %>
+    <%= f.submit "Post", class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
 <% end %>
+
+  </div>
+
+  <!-- column for character selection-->
+  <div class="col-2">
+
+
+  <% @my_characters.each do |character| %>
+
+
+  <div class="card character-card" id="card_for_<%=character.id%>" onclick="select_character(<%=character.id%>)">
+
+      <div class="row">
+          <%= image_tag(character.image(:thumb),  :class => "img") %>
+          <h5 class="card-text">
+            <%= character.name %>
+          </h5>
+      </div>
+
+  </div>
+
+ <%end%>
+
+
+
+
+
+
+  </div>
+
+</div>

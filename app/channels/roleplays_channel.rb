@@ -8,6 +8,6 @@ class RoleplaysChannel < ApplicationCable::Channel
   end
 
   def send_message(data)
-    current_user.characters[0].messages.create!(body: data['message'], roleplay_id: data['roleplay_id'])
+    Character.find(data['character_id']).messages.create!(body: data['message'], roleplay_id: data['roleplay_id'])
   end
 end
