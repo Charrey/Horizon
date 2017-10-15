@@ -12,23 +12,28 @@
     i.classList.add("bg-light")
   $("#card_for_" + c)[0].classList.add("bg-dark","text-white")
   $("#card_for_" + c)[0].classList.remove("bg-light")
-  console.log($("#card_for_" + c)[0].classList)
+
 
 @select_character_option =(c) ->
   optionarea = $("#options-area")
-  name = $("#" + c + " > name")[0].textContent
-  description = $("#" + c + " > description")[0].textContent
-  owner = $("#" + c + " > owner")[0].textContent
   form = $("#" + c + " > itsform")
   optionarea.empty()
   optionarea.append(form.clone())
+  for i in $('.option-card')
+    i.classList.remove("bg-dark", "text-white")
+  $('#option-card-for-' + c)[0].classList.add("bg-dark", "text-white")
+  $('.primary-card')[0].classList.remove("bg-dark", "text-white")
+  $('.primary-card')[0].classList.add("bg-secondary")
 
 
 @select_roleplay_option = ->
   optionarea = $("#options-area")
-  optionarea.empty()
   form = $("#roleplayform")
+  optionarea.empty()
   optionarea.append(form.clone())
+  for i in $('.option-card')
+    i.classList.remove("bg-dark", "text-white")
+  $('.primary-card')[0].classList.add("bg-dark", "text-white")
 
 jQuery(document).on 'turbolinks:load', ->
   switch getURLParameter("result")

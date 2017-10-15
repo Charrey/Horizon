@@ -10,6 +10,8 @@ class User < ApplicationRecord
   # validates :password, presence: true, length: { minimum: 8 }, confirmation: true
   # validates :password_confirmation, presence: true
 
+  validates :username, presence: true, uniqueness: true
+
   has_many :roleplays, dependent: :destroy
   has_many :characters, dependent: :destroy
 

@@ -24,7 +24,7 @@
     </div>
 
     <% @roleplay.characters.each do |character| %>
-      <div class="card rounded bg-light border-dark border-top-0" onclick="select_character_option(<%=character.id%>)">
+      <div class="card rounded bg-light border-dark border-top-0 option-card" id="option-card-for-<%=character.id%>" onclick="select_character_option(<%=character.id%>)">
         <div class="row rounded">
           <div class="col-3">
             <%= image_tag(character.image(:thumb), class: "rounded") %>
