@@ -36,38 +36,39 @@
   $('.primary-card')[0].classList.add("bg-dark", "text-white")
 
 jQuery(document).on 'turbolinks:load', ->
-  switch getURLParameter("result")
-    when "success"
-      switch getURLParameter("reason")
-        when "saved"
-          c = getURLParameter("selected")
-          if c > 0
-            name = $("#" + c + " > name")[0].textContent
-            $("#notice-alert-container").append("<div class=\"alert alert-success\">Options saved for <strong>" + name + "</strong>.</div>")
-          else if c == "-1"
-            $("#notice-alert-container").append("<div class=\"alert alert-success\">General roleplay options saved.</div>")
+  if $('#roleplays_edit').length > 0
+    switch getURLParameter("result")
+      when "success"
+        switch getURLParameter("reason")
+          when "saved"
+            c = getURLParameter("selected")
+            if c > 0
+              name = $("#" + c + " > name")[0].textContent
+              $("#notice-alert-container").append("<div class=\"alert alert-success\">Options saved for <strong>" + name + "</strong>.</div>")
+            else if c == "-1"
+              $("#notice-alert-container").append("<div class=\"alert alert-success\">General roleplay options saved.</div>")
+            else
+              console.error("unknown \"selected\" parameter")
+          when "deleted"
+            $("#notice-alert-container").append("<div class=\"alert alert-success\">Successfully deleted character.</div>")
+          when "created"
+            $("#notice-alert-container").append("<div class=\"alert alert-success\">Successfully created character.</div>")
           else
-            console.error("unknown \"selected\" parameter")
-        when "deleted"
-          $("#notice-alert-container").append("<div class=\"alert alert-success\">Successfully deleted character.</div>")
-        when "created"
-          $("#notice-alert-container").append("<div class=\"alert alert-success\">Successfully created character.</div>")
-        else
-          console.error("unknown \"reason\" parameter")
-    when "fail"
-      switch getURLParameter("reason")
-        when "nochanges"
-          $("#notice-alert-container").append("<div class=\"alert alert-warning\">No changes were detected.</div>")
-        when "nosuchuser"
-          $("#notice-alert-container").append("<div class=\"alert alert-danger\">That user doesn't exist!</div>")
-        else
-          console.error("unknown \"reason\" parameter")
-    else
-      console.error("unknown \"result\" parameter")
+            console.error("unknown \"reason\" parameter")
+      when "fail"
+        switch getURLParameter("reason")
+          when "nochanges"
+            $("#notice-alert-container").append("<div class=\"alert alert-warning\">No changes were detected.</div>")
+          when "nosuchuser"
+            $("#notice-alert-container").append("<div class=\"alert alert-danger\">That user doesn't exist!</div>")
+          else
+            console.error("unknown \"reason\" parameter")
+      else
+        console.error("unknown \"result\" parameter")
 
-  if c > 0
-    select_character_option(c)
-  else
-    select_roleplay_option()
+    if c > 0
+      select_character_option(c)
+    else
+      select_roleplay_option()
 
 

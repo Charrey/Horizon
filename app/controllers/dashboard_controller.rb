@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
     end
     @participations.uniq!
     @participations.sort! do |x, y|
-      Roleplay.sorter(x, y)
+      Roleplay.sorter(x, y, current_user)
     end
   end
 

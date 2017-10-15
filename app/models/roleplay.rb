@@ -27,12 +27,12 @@ class Roleplay < ApplicationRecord
     narrator.save!
   end
 
-  def self.sorter(a, b)
-    if b.user == current_user
-      return 1 unless a.user == current_user
+  def self.sorter(a, b, user)
+    if b.user == user
+      return 1 unless a.user == user
     end
-    if a.user == current_user
-      return -1 unless b.user == current_user
+    if a.user == user
+      return -1 unless b.user == user
     end
     if a.online != b.online
       return b.online ? 1 : -1
