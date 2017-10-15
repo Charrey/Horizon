@@ -3,49 +3,25 @@
 
 <h1 id="roleplay_title"><%= @roleplay.name %></h1>
 
-<!--
-<h2>Characters:</h2><br>
-<hr>
-<% @roleplay.characters.each do |char| %>
-    <%= char.name        %>             <br>
-    <%= char.description %>             <br>
-    <% if char.user %>
-    Owned by: <%= char.user %>          <br>
-    <% else %>
-    <em>Unowned</em>                    <br>
-    <% end %>
-    <hr>
-
-<% end %>-->
-
 <div class="row">
 
-
-  <div class="col-1">
-    <!--maybe do something with this later-->
-  </div>
-
-
   <!-- column for actual chatting-->
-  <div class="col-8">
-
-<div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">
-  <%= render @roleplay.messages %>
-</div>
-
-<hr>
-
-<%= form_for @message, url: '#', remote: true, id: 'new_message' do |f| %>
-    <%= hidden_field_tag 'roleplay_id', @roleplay.id %>
-    <%= hidden_field_tag 'character_id', -1, id: 'character_id_field' %>
-    <div class="form-group">
-      <%= f.label :body %>
-      <%= f.text_area :body, {class: 'form-control', id: 'message_body', disabled: true, value: 'Select a character to begin.'} %>
-      <small class="text-muted">From 2 to 1000 characters</small>
+  <div class="col-8 mx-5">
+    <div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">
+      <%= render @roleplay.messages %>
     </div>
+    <hr>
 
-    <%= f.submit 'Post', class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
-<% end %>
+    <%= form_for @message, url: '#', remote: true, id: 'new_message' do |f| %>
+      <%= hidden_field_tag 'roleplay_id', @roleplay.id %>
+      <%= hidden_field_tag 'character_id', -1, id: 'character_id_field' %>
+        <div class="form-group">
+          <%= f.label :body %>
+          <%= f.text_area :body, {class: 'form-control', id: 'message_body', disabled: true, value: 'Select a character to begin.'} %>
+          <small class="text-muted">From 2 to 1000 characters</small>
+        </div>
+      <%= f.submit 'Post', class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
+    <% end %>
 
   </div>
 
