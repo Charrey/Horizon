@@ -6,19 +6,15 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.css">
   </head>
 
   <body id="<%= controller_name %> <%= action_name %>">
 
-  <% if notice != nil %>
-    <p class="notice"><%= notice %></p>
-  <% end %>
 
-  <% if alert != nil %>
-    <p class="alert"><%= alert %></p>
-  <% end %>
 
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-custom">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="/dashboard">
@@ -26,7 +22,24 @@
           </a>
         </div>
       </div>
+    <div class="inline-flex">
+      <div class="text-white text-nowrap mx-3">
+        Logged in as: <strong><%=current_user.username%></strong>
+      </div>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link mx-2'  %>
+    </div>
     </nav>
+
+
+  <div id="notice-alert-container">
+    <% if notice != nil %>
+        <div class="alert alert-warning"><%= notice %></div>
+    <% end %>
+
+    <% if alert != nil %>
+        <div class="alert alert-danger "><%= alert %></div>
+    <% end %>
+  </div>
 
   <%= yield %>
   </body>

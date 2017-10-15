@@ -1,9 +1,7 @@
 <%= javascript_include_tag 'cable', 'data-turbolinks-track': 'reload' %>
 <%= javascript_include_tag 'roleplays' %>
 
-<%= link_to "Back to dashboard", "/dashboard" %>
-<h1><%= @roleplay.name %></h1>
-<p> <%= @roleplay.description %></p>
+<h1 id="roleplay_title"><%= @roleplay.name %></h1>
 
 <!--
 <h2>Characters:</h2><br>
@@ -23,17 +21,15 @@
 <div class="row">
 
 
-  <div class="col-2">
-    <% @roleplay.characters.each do |character| %>
-    <%= character.name %><br>
-    <% end %>
+  <div class="col-1">
+    <!--maybe do something with this later-->
   </div>
 
 
   <!-- column for actual chatting-->
   <div class="col-8">
 
-<div id="messages" data-roleplay-id="<%= @roleplay.id %>">
+<div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">
   <%= render @roleplay.messages %>
 </div>
 
@@ -44,40 +40,27 @@
     <%= hidden_field_tag 'character_id', -1, id: 'character_id_field' %>
     <div class="form-group">
       <%= f.label :body %>
-      <%= f.text_area :body, class: 'form-control' %>
+      <%= f.text_area :body, {class: 'form-control', id: 'message_body', disabled: true, value: 'Select a character to begin.'} %>
       <small class="text-muted">From 2 to 1000 characters</small>
     </div>
 
-    <%= f.submit "Post", class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
+    <%= f.submit 'Post', class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
 <% end %>
 
   </div>
 
   <!-- column for character selection-->
-  <div class="col-2">
-
-
-  <% @my_characters.each do |character| %>
-
-
-  <div class="card character-card" id="card_for_<%=character.id%>" onclick="select_character(<%=character.id%>)">
-
-      <div class="row">
-          <%= image_tag(character.image(:thumb),  :class => "img") %>
-          <h5 class="card-text">
-            <%= character.name %>
-          </h5>
+  <div class="col-3">
+      <% @my_characters.each do |character| %>
+      <div class="card bg-light border-dark character-card" id="card_for_<%=character.id%>" onclick="select_character(<%=character.id%>)">
+          <div>
+              <%= image_tag(character.image(:thumb),  :class => 'card-img-left') %>
+              <div class="center-in-me-please">
+                <h5 class="card-text"><%= character.name %></h5>
+              </div>
+          </div>
       </div>
 
+     <%end%>
   </div>
-
- <%end%>
-
-
-
-
-
-
-  </div>
-
 </div>

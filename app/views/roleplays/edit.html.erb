@@ -1,15 +1,33 @@
-<h2>Settings for roleplay <strong><%=@roleplay.name%></strong></h2>
+<h2 id="roleplay_title">Settings for roleplay <strong><%=@roleplay.name%></strong></h2>
 
 <div class="row">
   <div class="col-1">
     <!-- lol-whitespace-->
   </div>
   <div class="col-4">
+
+
+    <div class="card primary-card rounded bg-dark text-white" onclick="select_roleplay_option()" >
+      <div class="row rounded">
+        <div class="col-3">
+          <%= image_tag(@roleplay.image(:thumb), class: 'rounded') %>
+        </div>
+        <div class="col-9">
+          <div class="center-in-me-please">
+            <div class="card-text">
+            <h5><%= @roleplay.name %></h5>
+              <em>Roleplay settings</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <% @roleplay.characters.each do |character| %>
-      <div class="card roleplay-card" >
-        <div class="row">
+      <div class="card rounded bg-light border-dark border-top-0" onclick="select_character_option(<%=character.id%>)">
+        <div class="row rounded">
           <div class="col-3">
-            <%= image_tag(character.image(:thumb)) %>
+            <%= image_tag(character.image(:thumb), class: "rounded") %>
           </div>
           <div class="col-9">
             <div class="center-in-me-please">
@@ -21,5 +39,81 @@
         </div>
       </div>
     <% end %>
+
+    <%= button_to '+', {controller: :roleplays, action: :add_dummy, method: :post, id: @roleplay.id}, {class: 'btn btn-warning btn-lrg', id: 'add_character', disabled: @roleplay.online}%>
+  </div>
+  <div class="col-4 rounded" id="options-area" style="border: 1px solid lightgray">
   </div>
 </div>
+
+<% @roleplay.characters.each do |character| %>
+    <div hidden id="<%= character.id %>">
+      <name><%= character.name %></name>
+      <description><%= character.description %></description>
+      <owner><%= character.user.username%></owner>
+      <itsform>
+        <h4 style="margin: 1rem; text-align: center">Options for <%=character.name%></h4>
+
+        <div style="margin: 1rem">
+          <%= form_for character, html: { multipart: true }  do |f| %>
+              <div class="form-group">
+                <%= f.label :name, 'Character name'%>
+                <%= f.text_field :name, {value: character.name, class: 'form-control', disabled: character.is_narrator || @roleplay.online} %>
+              </div>
+              <div class="form-group">
+                <%= f.label :description, 'Character description'%>
+                <%= f.text_area :description, {value: character.description, class: 'form-control', disabled: character.is_narrator || @roleplay.online} %>
+              </div>
+              <div class="form-group">
+                <%= f.label :image, 'Image' %>
+                <%= f.file_field :image, {class: 'form-control-file', disabled: character.is_narrator || @roleplay.online} %>
+                <small class="form-text text-muted">Not selecting an image will not change the character image.</small>
+              </div>
+              <div class="form-group">
+                <%= f.label :owner, 'Owner' %>
+                <%= f.text_field :owner, {class: 'form-control', value: character.user.username, list: 'participants', disabled: character.is_narrator || @roleplay.online} %>
+                <datalist id="participants">
+                  <% @roleplay.participants.each do |participant| %>
+                      <option value="<%=participant.username%>">
+                  <% end %>
+                </datalist>
+              </div>
+              <%= f.submit 'Save changes', {class: 'btn btn-primary', disabled: character.is_narrator || @roleplay.online}%>
+          <% end %>
+          <br>
+          <%= button_to 'Delete', character, method: :delete, class: 'btn btn-danger btn-block', disabled: character.is_narrator || @roleplay.online, onclick: "return confirm('Are you sure you want to delete this character?');"%>
+        </div>
+      </itsform>
+    </div>
+    <div hidden>
+      <div id="roleplayform">
+        <h4 style="margin: 1rem; text-align: center">General roleplay options</h4>
+        <div style="margin: 1rem">
+          <%= form_for @roleplay, html: { multipart: true }  do |f| %>
+              <div class="form-group">
+                <%= f.label :name, 'Roleplay name'%>
+                <%= f.text_field :name, {value: @roleplay.name, class: 'form-control', disabled: @roleplay.online} %>
+              </div>
+              <div class="form-group">
+                <%= f.label :description, 'Roleplay description'%>
+                <%= f.text_area :description, {value: @roleplay.description, class: 'form-control', disabled: @roleplay.online} %>
+              </div>
+              <div class="form-group">
+                <%= f.label :image, 'Image' %>
+                <%= f.file_field :image, {class: 'form-control-file', disabled: @roleplay.online} %>
+                <small class="form-text text-muted">Not selecting an image will not change the character image.</small>
+              </div>
+              <%= f.submit 'Save changes', {class: 'btn btn-primary', disabled: @roleplay.online}%>
+          <% end %>
+          <br>
+          <% if @roleplay.online %>
+              <%= button_to 'Stop', {controller: :roleplays, action: :stop, method: :post, id: @roleplay.id}, {class: 'btn btn-danger btn-block my-2'}%>
+              <a type="button" href="/roleplays/<%=@roleplay.id%>" class="btn btn-primary btn-block my-2">Enter</a>
+          <% else %>
+              <%= button_to 'Start', {controller: :roleplays, action: :start, method: :post, id: @roleplay.id}, {class: 'btn btn-success btn-block my-2'}%>
+          <% end %>
+              <%= button_to 'Delete', @roleplay, method: :delete, class: 'btn btn-danger btn-block my-5', disabled: @roleplay.online, onclick: "return confirm('Are you sure you want to delete this roleplay? THIS CANNOT BE UNDONE!');"%>
+        </div>
+      </div>
+    </div>
+<% end %>

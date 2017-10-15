@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post '/characters/assign' => 'characters#assign'
   post '/roleplays/start/:id' => 'roleplays#start'
   post '/roleplays/stop/:id' => 'roleplays#stop'
+  post '/roleplays/add_dummy/:id' => 'roleplays#add_dummy'
   resources :users
   resources :roleplays
   resources :characters

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Horizon</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'devise', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body id="<%= controller_name %> <%= action_name %>">
+
+
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/dashboard">
+        Horizon
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<div id="notice-alert-container">
+  <% if notice != nil %>
+      <div class="alert alert-warning"><%= notice %></div>
+  <% end %>
+
+  <% if alert != nil %>
+      <div class="alert alert-danger "><%= alert %></div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-4">
+  </div>
+  <div class="col-6">
+  <%= yield %>
+  </div>
+</div>
+
+
+</body>
+</html>

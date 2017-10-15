@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20171007154917) do
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.boolean "is_narrator", default: false
     t.integer "user_id"
     t.integer "roleplay_id"
     t.datetime "created_at", null: false

@@ -4,22 +4,34 @@
 #messages {
   height: 28rem;
   overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid lightgray;
+}
+
+#roleplay_title {
+  padding: 1.5rem;
+  text-align: center;
 }
 
 .character-card {
   height: 100px;
+  width: 80%;
+  margin-bottom: 0.5rem;
 }
 
 .card-text {
   padding: 1rem;
 }
 
-.selected {
-  background-color: red;
-  color: red;
+.card-img-left {
+  float: left;
 }
 
-h2 {
-  padding: 2rem;
-  text-align: center;
+#add_character {
+  height: 4rem;
+  width: 20%;
+  margin: 1rem auto 0;
+  display: block;
+  color: white;
 }
+

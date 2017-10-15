@@ -1,5 +1,5 @@
 class Character < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
   belongs_to :roleplay
   has_many :messages
 

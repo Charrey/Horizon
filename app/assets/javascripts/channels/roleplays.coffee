@@ -30,6 +30,7 @@ jQuery(document).on 'turbolinks:load', ->
         textarea.val('')
 
       return false
+    scrollToBottom()
 
 
 scrollToBottom = ->

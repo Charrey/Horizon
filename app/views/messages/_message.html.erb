@@ -1,8 +1,8 @@
-<div class="card">
+<div class="card bg-light rounded">
   <div class="card-block">
     <div class="row">
       <div class="col-1">
-        <%= image_tag message.character.image(:thumb) %>
+        <%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %>
       </div>
       <div class="col-11">
         <p class="card-text">

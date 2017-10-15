@@ -1,25 +1,26 @@
-<a href="/dashboard">Back</a>
-<h2>Create a new roleplay here</h2>
+<div class="m-5">
+  <div class="col-4">
+    <h2>Create a new roleplay</h2>
+      <%= form_for @roleplay, html: { multipart: true } do |f| %>
+
+        <!--THIS IS ONLY IF JAVASCRIPT IS DISABLED; OTHEWISE HTML5 WILL HANDLE ERRORS-->
+        <% @roleplay.errors.full_messages.each do |error| %>
+            <%= error %><br>
+        <%end%>
+        <!----------------------------------------------------------------------------->
 
 
-<%= form_for @roleplay, html: { multipart: true } do |f| %>
+      <%= f.label :name, "Name"%><br>
+      <%= f.text_field :name, required: true, :input_html => {:minlength => 1}, :placeholder => "Name", class: 'form-control' %><br>
 
-    <!--THIS IS ONLY IF JAVASCRIPT IS DISABLED; OTHEWISE HTML5 WILL HANDLE ERRORS-->
-    <% @roleplay.errors.full_messages.each do |error| %>
-        <%= error %><br>
-    <%end%>
-    <!----------------------------------------------------------------------------->
+      <%= f.label :description, "Description" %><br>
+      <%= f.text_area :description, :placeholder => "Description", :input_html => {maxlength: 1}, class: 'form-control'%><br>
 
-  <%= f.label :name, "Name" %><br>
-  <%= f.text_field :name, required: true, :input_html => {:minlength => 3 , maxlength: 33}, :placeholder => "Name" %><br>
+      <%= f.label  :image, "Avatar" %><br>
+      <%= f.file_field :image, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'%><br>
 
-  <%= f.label  :image, "Avatar" %><br>
-  <%= f.file_field :image, accept: 'image/png,image/gif,image/jpeg' %><br>
+      <%= f.submit "Create", class: 'btn btn-primary my-2' %>
 
-  <%= f.label :description, "Description" %><br>
-  <%= f.text_area :description, :placeholder => "Description", :input_html => {maxlength: 150}%><br>
-
-  <%= f.submit "Create" %>
-
-
-<% end %>
+  <% end %>
+  </div>
+</div>
