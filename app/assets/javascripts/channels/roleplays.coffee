@@ -15,7 +15,7 @@ jQuery(document).on 'turbolinks:load', ->
         shouldScroll = messages.scrollTop + messages.clientHeight == messages.scrollHeight;
         window.process(data)
         if (!shouldScroll)
-          scrollToBottom()
+          window.scrollToBottom()
 
       send_message: (message, roleplay_id, character_id) ->
         @perform 'send_message', message: message, roleplay_id: roleplay_id, character_id: character_id
@@ -30,10 +30,9 @@ jQuery(document).on 'turbolinks:load', ->
         textarea.val('')
 
       return false
-    scrollToBottom()
 
 
 
 
-scrollToBottom = ->
+window.scrollToBottom = ->
   messages.scrollTop = messages.scrollHeight;

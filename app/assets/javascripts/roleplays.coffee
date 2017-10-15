@@ -40,6 +40,7 @@ jQuery(document).on 'turbolinks:load', ->
   if $('#roleplays_show .messagetobeadded').length > 0 && $('#messages .card').length == 0
     for message in $(".messagetobeadded")
       window.process(message)
+    window.scrollToBottom()
 
 jQuery(document).on 'turbolinks:load', ->
   if $('#roleplays_edit').length > 0
