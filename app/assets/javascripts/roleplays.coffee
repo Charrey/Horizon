@@ -38,9 +38,15 @@
 jQuery(document).on 'turbolinks:load', ->
   #if there are any messages that need to be loaded into the messages screen AND THIS HAS NOT ALREADY BEEN DONE
   if $('#roleplays_show .messagetobeadded').length > 0 && $('#messages .card').length == 0
+    previous_from = null
+    previous_message = null
     for message in $(".messagetobeadded")
       window.process(message)
+      previous_from = $("message-from", message)[0].textContent
     window.scrollToBottom()
+    if $('.character-card').length > 0
+      $('.character-card')[0].click()
+
 
 jQuery(document).on 'turbolinks:load', ->
   if $('#roleplays_edit').length > 0
@@ -79,28 +85,36 @@ jQuery(document).on 'turbolinks:load', ->
       select_roleplay_option()
 
 
-window.process =(data) ->
+window.process =(data, previous_from = null) ->
   messagetype = $("message-type", data)[0].textContent
   image = $("message-image", data)[0].outerHTML
   from = $("message-from", data)[0].textContent
   content = $("message-content", data)[0].textContent
   switch messagetype
     when "message"
-      $('#messages').append(
-        "<div class=\"card bg-light rounded\">\n" +
-          "  <div class=\"card-block\">\n" +
-          "    <div class=\"row\">\n" +
-          "      <div class=\"col-1\">\n" +
-          image +
-          "      </div>\n" +
-          "      <div class=\"col-11\">\n" +
-          "        <p class=\"card-text\">\n" +
-          "          <span class=\"text-muted\">" + from + " says</span><br>\n" +
-          "           " + content + "\n" +
-          "        </p>\n" +
-          "      </div>\n" +
-          "    </div>\n" +
-          "  </div>\n" +
-          "</div>"
-      )
+
+      previous_message = $('#messages > .message-card:last sender')
+      if previous_message.length > 0
+        previous_from = $('#messages > .message-card:last sender')[0].textContent
+      if from == previous_from
+          $('#messages > .message-card:last .text-container').append("<br><br>" + content)
+      else
+        $('#messages').append(
+          "<div class=\"card bg-light rounded message-card\">\n" +
+            "  <sender hidden>" + from + "</sender>" +
+            "  <div class=\"card-block\">\n" +
+            "    <div class=\"row\">\n" +
+            "      <div class=\"col-1\">\n" +
+            image +
+            "      </div>\n" +
+            "      <div class=\"col-11\">\n" +
+            "        <p class=\"card-text text-container\">\n" +
+            "          <span class=\"text-muted\">" + from + " says</span><br>\n" +
+            "           " + content + "\n" +
+            "        </p>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "  </div>\n" +
+            "</div>"
+        )
     else console.error("Unknown message type: " + messagetype)
