@@ -1,15 +1,6 @@
-<div class="card bg-light rounded">
-  <div class="card-block">
-    <div class="row">
-      <div class="col-1">
-        <%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %>
-      </div>
-      <div class="col-11">
-        <p class="card-text">
-          <span class="text-muted"><%= message.character.name %> says</span><br>
-          <%= message.body %>
-        </p>
-      </div>
-    </div>
-  </div>
+<div class="messagetobeadded" hidden>
+  <message-type>message</message-type>
+  <message-image>   <%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %> </message-image>
+  <message-from>    <%= message.character.name %>                                         </message-from>
+  <message-content> <%= message.body %>                                                   </message-content>
 </div>

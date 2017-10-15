@@ -13,7 +13,7 @@ jQuery(document).on 'turbolinks:load', ->
 
       received: (data) ->
         shouldScroll = messages.scrollTop + messages.clientHeight == messages.scrollHeight;
-        messages.append(data)
+        window.process(data)
         if (!shouldScroll)
           scrollToBottom()
 
@@ -31,6 +31,8 @@ jQuery(document).on 'turbolinks:load', ->
 
       return false
     scrollToBottom()
+
+
 
 
 scrollToBottom = ->

@@ -36,6 +36,12 @@
   $('.primary-card')[0].classList.add("bg-dark", "text-white")
 
 jQuery(document).on 'turbolinks:load', ->
+  #if there are any messages that need to be loaded into the messages screen AND THIS HAS NOT ALREADY BEEN DONE
+  if $('#roleplays_show .messagetobeadded').length > 0 && $('#messages .card').length == 0
+    for message in $(".messagetobeadded")
+      window.process(message)
+
+jQuery(document).on 'turbolinks:load', ->
   if $('#roleplays_edit').length > 0
     switch getURLParameter("result")
       when "success"
@@ -72,3 +78,28 @@ jQuery(document).on 'turbolinks:load', ->
       select_roleplay_option()
 
 
+window.process =(data) ->
+  messagetype = $("message-type", data)[0].textContent
+  image = $("message-image", data)[0].outerHTML
+  from = $("message-from", data)[0].textContent
+  content = $("message-content", data)[0].textContent
+  switch messagetype
+    when "message"
+      $('#messages').append(
+        "<div class=\"card bg-light rounded\">\n" +
+          "  <div class=\"card-block\">\n" +
+          "    <div class=\"row\">\n" +
+          "      <div class=\"col-1\">\n" +
+          image +
+          "      </div>\n" +
+          "      <div class=\"col-11\">\n" +
+          "        <p class=\"card-text\">\n" +
+          "          <span class=\"text-muted\">" + from + " says</span><br>\n" +
+          "           " + content + "\n" +
+          "        </p>\n" +
+          "      </div>\n" +
+          "    </div>\n" +
+          "  </div>\n" +
+          "</div>"
+      )
+    else console.error("Unknown message type: " + messagetype)
