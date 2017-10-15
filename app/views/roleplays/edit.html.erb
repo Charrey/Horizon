@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <% @roleplay.characters.each do |character| %>
+    <% @roleplay.sortedcharacters(current_user).each do |character| %>
       <div class="card rounded bg-light border-dark border-top-0 option-card" id="option-card-for-<%=character.id%>" onclick="select_character_option(<%=character.id%>)">
         <div class="row rounded">
           <div class="col-3">

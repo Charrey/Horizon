@@ -26,4 +26,25 @@ class Roleplay < ApplicationRecord
     narrator.user = roleplay.user
     narrator.save!
   end
+
+  def self.sorter(a, b)
+    if b.user == current_user
+      return 1 unless a.user == current_user
+    end
+    if a.user == current_user
+      return -1 unless b.user == current_user
+    end
+    if a.online != b.online
+      return b.online ? 1 : -1
+    end
+    a.name <=> b.name
+  end
+
+  def sortedcharacters(user)
+    temp_characters = characters.clone().to_a
+    temp_characters.sort! do |x,y|
+      Character.sorter(x,y, user)
+    end
+    temp_characters
+  end
 end
