@@ -93,14 +93,14 @@ window.process =(data, previous_from = null) ->
   switch messagetype
     when "message"
 
-      previous_message = $('#messages > .message-card:last sender')
+      previous_message = $('#messages > .message-entry:last sender')
       if previous_message.length > 0
-        previous_from = $('#messages > .message-card:last sender')[0].textContent
+        previous_from = $('#messages > .message-entry:last sender')[0].textContent
       if from == previous_from
-          $('#messages > .message-card:last .text-container').append("<br><br>" + content)
+          $('#messages > .message-card:last .text-container').append("<br>" + content)
       else
         $('#messages').append(
-          "<div class=\"card bg-light rounded message-card\">\n" +
+          "<div class=\"card bg-light rounded message-card message-entry\">\n" +
             "  <sender hidden>" + from + "</sender>" +
             "  <div class=\"card-block\">\n" +
             "    <div class=\"row\">\n" +
@@ -117,4 +117,12 @@ window.process =(data, previous_from = null) ->
             "  </div>\n" +
             "</div>"
         )
+    when "announcement"
+      $('#messages').append(
+        "<div class=\"rounded annoucement-card message-entry my-4\">\n" +
+        content + "\n" +
+        "</div>"
+      )
+
+
     else console.error("Unknown message type: " + messagetype)

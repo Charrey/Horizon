@@ -1,5 +1,9 @@
 <div class="messagetobeadded" hidden>
-  <message-type>message</message-type>
+  <% if message.character.is_narrator %>
+    <message-type>announcement</message-type>
+  <% else %>
+    <message-type>message</message-type>
+  <% end %>
   <message-image><%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %></message-image>
   <message-from><%= message.character.name %></message-from>
   <message-content><%= message.body %></message-content>
