@@ -54,8 +54,6 @@ class RoleplaysController < ApplicationController
       changed = true unless params[:roleplay][:image] == roleplay.image
       roleplay.image = params[:roleplay][:image]
     end
-    changed = true unless params[:roleplay][:disable_images].to_s == roleplay.disable_images.to_s
-    roleplay.disable_images = params[:roleplay][:disable_images]
     unless changed
       redirect_to '/roleplays/' + roleplay.id.to_s + '/edit?result=fail&reason=nochanges'
       return
@@ -74,6 +72,18 @@ class RoleplaysController < ApplicationController
     character.save!
     redirect_to '/roleplays/' + roleplay.id.to_s + '/edit?result=success&reason=created&selected=' + character.id.to_s
   end
+
+  def message_to_append
+    @character_id = params[:character_id]
+    @character = Character.find_by_id(@character_id)
+    render :layout => false
+  end
+
+  def save_message
+    @character_id = Character.find_by_id(params[:character_id])
+
+  end
+
 
   private
 

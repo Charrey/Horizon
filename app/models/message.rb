@@ -9,5 +9,13 @@ class Message < ApplicationRecord
     created_at.strftime('%H:%M:%S %d %B %Y')
   end
 
+  def self.save_message(params)
+    @character_id = params[:character_id]
+    @roleplay_id = params[:roleplay_id]
+    @body = params[:body]
+    puts "save_message!!!!"
+    Message.create(character_id: @character_id, roleplay_id: @roleplay_id, body: @body)
+  end
+
 
 end

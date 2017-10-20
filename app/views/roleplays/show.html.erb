@@ -8,31 +8,34 @@
   <!-- column for actual chatting-->
   <div class="col-8 mx-5">
     <div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">
-      <%= render @roleplay.messages %>
+      <% @messages = @roleplay.messages %>
+      <% for @message in @messages do %>
+        <%= image_tag(@message.character.image(:thumb),  :class => 'card-img-left') %>
+	&nbsp;<%= @message.character.name%> says:</br>
+        &nbsp;<%= @message.body %>
+        <div class="clear"></div>
+        </br>
+      <% end %>
+      <!--<%= render @roleplay.messages %>-->
     </div>
-    <hr>
-
-    <%= form_for @message, url: '#', remote: true, id: 'new_message' do |f| %>
-      <%= hidden_field_tag 'roleplay_id', @roleplay.id %>
-      <%= hidden_field_tag 'character_id', -1, id: 'character_id_field' %>
         <div class="form-group">
-          <%= f.label :body %>
-          <%= f.text_area :body, {class: 'form-control', id: 'message_body', disabled: true, value: 'Select a character to begin.'} %>
+          Body:</br>
+          <textarea id="message_body" class="form-control"></textarea>
           <small class="text-muted">From 2 to 1000 characters</small>
         </div>
-      <%= f.submit 'Post', class: 'btn btn-primary btn-lg', id: 'submit_field', disabled: true %>
-    <% end %>
+        <div id="submit_field" class="btn btn-primary btn-lg">Submit message</div>
+
 
   </div>
-
+</br>
   <!-- column for character selection-->
   <div class="col-3">
       <% @my_characters.each do |character| %>
-      <div class="card bg-light border-dark character-card" id="card_for_<%=character.id%>" onclick="select_character(<%=character.id%>)">
+      <div class="card bg-light border-dark character-card" id="card_for_<%=character.id%>"%>
           <div>
-              <%= image_tag(character.image(:thumb),  :class => 'card-img-left') %>
-              <div class="center-in-me-please">
-                <h5 class="card-text"><%= character.name %></h5>
+              <img src="<%=character.image(:thumb)%>" id="character-image-<%=character.id%>" class="card-img-left" />
+              <div id="character-id-<%=character.id%>" class="center-in-me-please character-name-box">
+                <h5 id="character-name-<%=character.name%>" class="card-text"><%= character.name %></h5>
               </div>
           </div>
       </div>
@@ -40,3 +43,30 @@
      <%end%>
   </div>
 </div>
+<div id="message_box"></div>
+<script>
+  $("#message_box").hide();
+  //select by default the first character in the list
+  $(".character-card").first().removeClass('bg-light');
+  $(".character-card").first().addClass('bg-dark');
+  $(".character-name-box").click(function(){
+    $(".character-card").removeClass('bg-dark');
+    $(".character-card").addClass('bg-light');
+    var character_card_of_this_character = $(this).parent().parent();
+    character_card_of_this_character.addClass('bg-dark');
+    $("#message_body").val("");
+  });
+  $("#submit_field").click(function(){
+    var message_body = $("#message_body").val();
+    var id = $('.bg-dark.character-card').attr('id').substring(9);//.children().second().attr('id');
+    var name = $("#character-id-" + id).children().first().text();
+    $.get('/roleplays/message_to_append/' + String(id), function(data1){
+       $("#messages").append(data1 + "&nbsp;" + message_body + "</br><div class='clear'></div>");
+       $.post("/messages/save_message", {character_id: String(id), body: String(message_body), roleplay_id: "<%=@roleplay.id%>"}, function(data, status){
+        alert(status);        
+       });      
+    });
+    //alert($("#message_box")[0]outerHtml);
+    //$("#messages").append(message_to_append);
+  });
+</script>
