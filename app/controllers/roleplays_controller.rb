@@ -54,6 +54,8 @@ class RoleplaysController < ApplicationController
       changed = true unless params[:roleplay][:image] == roleplay.image
       roleplay.image = params[:roleplay][:image]
     end
+    changed = true unless params[:roleplay][:disable_images].to_s == roleplay.disable_images.to_s
+    roleplay.disable_images = params[:roleplay][:disable_images]
     unless changed
       redirect_to '/roleplays/' + roleplay.id.to_s + '/edit?result=fail&reason=nochanges'
       return

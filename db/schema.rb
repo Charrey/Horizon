@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20171015193428) do
     t.string "name"
     t.string "description"
     t.boolean "online", default: false
+    t.boolean "disable_images", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_file_name"

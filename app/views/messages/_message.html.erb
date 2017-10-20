@@ -1,10 +1,20 @@
 <div class="messagetobeadded" hidden>
+
+
   <% if message.character.is_narrator %>
     <message-type>announcement</message-type>
   <% else %>
     <message-type>message</message-type>
   <% end %>
-  <message-image><%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %></message-image>
+
+
+  <% if message.roleplay.disable_images %>
+      <message-image><%= message.character.name %></message-image>
+   <% else %>
+      <message-image><%= image_tag(message.character.image(:thumb), {class: 'rounded'}) %></message-image>
+   <% end %>
+
+
   <message-from><%= message.character.name %></message-from>
   <message-content><%= message.body %></message-content>
 </div>
