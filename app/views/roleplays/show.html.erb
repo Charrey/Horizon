@@ -1,6 +1,3 @@
-<%= javascript_include_tag 'cable', 'data-turbolinks-track': 'reload' %>
-<%= javascript_include_tag 'roleplays' %>
-
 <h1 id="roleplay_title"><%= @roleplay.name %></h1>
 
 <div class="row">
@@ -11,7 +8,7 @@
       <% @messages = @roleplay.messages %>
       <% for @message in @messages do %>
         <%= image_tag(@message.character.image(:thumb),  :class => 'card-img-left') %>
-	&nbsp;<%= @message.character.name%> says:</br>
+	&nbsp;<%= @message.character.name%> said:</br>
         &nbsp;<%= @message.body %>
         <div class="clear"></div>
         </br>
@@ -35,7 +32,7 @@
           <div>
               <img src="<%=character.image(:thumb)%>" id="character-image-<%=character.id%>" class="card-img-left" />
               <div id="character-id-<%=character.id%>" class="center-in-me-please character-name-box">
-                <h5 id="character-name-<%=character.name%>" class="card-text"><%= character.name %></h5>
+                <h5 id="character-name-<%=character.name%>" class="character_name">&nbsp;<%= character.name %></h5>
               </div>
           </div>
       </div>
@@ -43,30 +40,29 @@
      <%end%>
   </div>
 </div>
-<div id="message_box"></div>
 <script>
-  $("#message_box").hide();
+  $("#message_body").val("");
+ $("#messages").scrollTop($("#messages")[0].scrollHeight);  //goes at the bottom of the scroll of messages so you don't have to scroll
   //select by default the first character in the list
   $(".character-card").first().removeClass('bg-light');
   $(".character-card").first().addClass('bg-dark');
-  $(".character-name-box").click(function(){
+  $(".character-card").click(function(){
     $(".character-card").removeClass('bg-dark');
     $(".character-card").addClass('bg-light');
-    var character_card_of_this_character = $(this).parent().parent();
-    character_card_of_this_character.addClass('bg-dark');
-    $("#message_body").val("");
+    $(this).addClass('bg-dark');
+    $("#message_body").val("");//empty the submit message so the new character can write its thoughts
   });
   $("#submit_field").click(function(){
     var message_body = $("#message_body").val();
     var id = $('.bg-dark.character-card').attr('id').substring(9);//.children().second().attr('id');
     var name = $("#character-id-" + id).children().first().text();
     $.get('/roleplays/message_to_append/' + String(id), function(data1){
-       $("#messages").append(data1 + "&nbsp;" + message_body + "</br><div class='clear'></div>");
+       
        $.post("/messages/save_message", {character_id: String(id), body: String(message_body), roleplay_id: "<%=@roleplay.id%>"}, function(data, status){
-        alert(status);        
+        $("#messages").append(data1 + "&nbsp;" + message_body + "</br><div class='clear'></div>"); 
+        $("#message_body").val("");  
+        $("#messages").scrollTop($("#messages")[0].scrollHeight);  
        });      
     });
-    //alert($("#message_box")[0]outerHtml);
-    //$("#messages").append(message_to_append);
   });
 </script>
