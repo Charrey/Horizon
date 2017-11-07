@@ -1,0 +1,10 @@
+<% for @message in @messages do %>
+    <div class="message-card">
+        <%= image_tag(@message.character.image(:thumb),  :class => 'card-img-left') %>
+	&nbsp;<%= @message.character.name%> said:</br>
+        &nbsp;<%= @message.body %>
+        &nbsp;
+        <span id="message_id_<%=@message.id%>"></span>
+        <div class="clear"></div>
+    </div>
+      <% end %>
