@@ -84,6 +84,17 @@ class RoleplaysController < ApplicationController
 
   end
 
+  def last_message_id
+    @roleplay_id = params[:roleplay_id]
+    @message_id = Message.last_message_id(@roleplay_id)
+    render :layout => false
+  end
+
+  def roleplay_messages
+    @roleplay = Roleplay.find(params[:roleplay_id])
+    @messages = @roleplay.messages
+    render :layout => false
+  end
 
   private
 

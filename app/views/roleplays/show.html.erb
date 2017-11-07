@@ -4,16 +4,9 @@
 
   <!-- column for actual chatting-->
   <div class="col-8 mx-5">
-    <div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">
-      <% @messages = @roleplay.messages %>
-      <% for @message in @messages do %>
-        <%= image_tag(@message.character.image(:thumb),  :class => 'card-img-left') %>
-	&nbsp;<%= @message.character.name%> said:</br>
-        &nbsp;<%= @message.body %>
-        <div class="clear"></div>
-        </br>
-      <% end %>
-      <!--<%= render @roleplay.messages %>-->
+    <% @messages = @roleplay.messages %>
+    <div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">      
+      
     </div>
         <div class="form-group">
           Body:</br>
@@ -28,7 +21,7 @@
   <!-- column for character selection-->
   <div class="col-3">
       <% @my_characters.each do |character| %>
-      <div class="card bg-light border-dark character-card" id="card_for_<%=character.id%>"%>
+      <div class="card light-card border-dark character-card" id="card_for_<%=character.id%>"%>
           <div>
               <img src="<%=character.image(:thumb)%>" id="character-image-<%=character.id%>" class="card-img-left" />
               <div id="character-id-<%=character.id%>" class="center-in-me-please character-name-box">
@@ -41,20 +34,47 @@
   </div>
 </div>
 <script>
-  $("#message_body").val("");
+ $("#last_message_id").hide();
+ $("#message_body").val("");
  $("#messages").scrollTop($("#messages")[0].scrollHeight);  //goes at the bottom of the scroll of messages so you don't have to scroll
   //select by default the first character in the list
-  $(".character-card").first().removeClass('bg-light');
-  $(".character-card").first().addClass('bg-dark');
+  $(".character-card").first().removeClass('light-card');
+  $(".character-card").first().addClass('dark-card');
   $(".character-card").click(function(){
-    $(".character-card").removeClass('bg-dark');
-    $(".character-card").addClass('bg-light');
-    $(this).addClass('bg-dark');
+    $(".character-card").removeClass('dark-card');
+    $(".character-card").addClass('light-card');
+    $(this).addClass('dark-card');
     $("#message_body").val("");//empty the submit message so the new character can write its thoughts
   });
+ 
+  function load_messages()
+  {
+    $("#messages").load('/roleplays/roleplay_messages/<%=@roleplay.id%>', function(data1){
+      $("#messages").scrollTop($("#messages")[0].scrollHeight);  
+
+    });
+  }
+
+  function check_and_load_messages()
+  {
+    var url = "/roleplays/last_message_id/<%=@roleplay.id%>";
+    $.get(url, function(data){
+     if(data != ""){ 
+      var last_message = $("#message_id_" + String(data));
+      if(last_message.length == 0){
+        load_messages();
+      }
+     }
+    });
+    
+    setTimeout(check_and_load_messages, 1000);
+  }
+  load_messages();
+  setTimeout(check_and_load_messages, 3000);
+
   $("#submit_field").click(function(){
     var message_body = $("#message_body").val();
-    var id = $('.bg-dark.character-card').attr('id').substring(9);//.children().second().attr('id');
+    var id = $('.dark-card.character-card').attr('id').substring(9);//.children().second().attr('id');
     var name = $("#character-id-" + id).children().first().text();
     $.get('/roleplays/message_to_append/' + String(id), function(data1){
        

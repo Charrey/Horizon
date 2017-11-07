@@ -1,0 +1,4 @@
+<% if @character != nil then %>
+  <%= image_tag(@character.image(:thumb),  :class => 'card-img-left') %>
+  &nbsp;<%= @character.name%> said:</br>
+<% end%>

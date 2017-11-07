@@ -25,4 +25,8 @@
 .inline-flex {
   display: inline-flex;
 }
-body{overflow-x: hidden;}
+body{
+  overflow-x: hidden;
+  background-image: image-url("background.jpg");
+}
+

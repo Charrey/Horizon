@@ -9,7 +9,7 @@
   <div class="col-4">
 
 
-    <div class="card primary-card rounded bg-dark text-white" onclick="select_roleplay_option()" >
+    <div class="primary-card rounded dark-card card text-white" onclick="select_roleplay_option()" >
       <div class="row rounded">
         <div class="col-3">
           <%= image_tag(@roleplay.image(:thumb), class: 'rounded') %>
@@ -26,7 +26,7 @@
     </div>
 
     <% @roleplay.sortedcharacters(current_user).each do |character| %>
-      <div class="card rounded bg-light border-dark border-top-0 option-card" id="option-card-for-<%=character.id%>" onclick="select_character_option(<%=character.id%>)">
+      <div class="rounded light-card card border-dark border-top-0 option-card" id="option-card-for-<%=character.id%>" onclick="select_character_option(<%=character.id%>)">
         <div class="row rounded">
           <div class="col-3">
             <%= image_tag(character.image(:thumb), class: "rounded") %>

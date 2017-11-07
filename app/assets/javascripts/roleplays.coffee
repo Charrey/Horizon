@@ -8,10 +8,10 @@
     $("#message_body")[0].value = ""
   $("#character_id_field").val(c)
   for i in $(".character-card")
-    i.classList.remove("bg-dark", "text-white")
-    i.classList.add("bg-light")
-  $("#card_for_" + c)[0].classList.add("bg-dark","text-white")
-  $("#card_for_" + c)[0].classList.remove("bg-light")
+    i.classList.remove("dark-card", "text-white")
+    i.classList.add("light-card")
+  $("#card_for_" + c)[0].classList.add("dark-card","text-white")
+  $("#card_for_" + c)[0].classList.remove("light-card")
 
 
 @select_character_option =(c) ->
@@ -20,10 +20,10 @@
   optionarea.empty()
   optionarea.append(form.clone())
   for i in $('.option-card')
-    i.classList.remove("bg-dark", "text-white")
-  $('#option-card-for-' + c)[0].classList.add("bg-dark", "text-white")
-  $('.primary-card')[0].classList.remove("bg-dark", "text-white")
-  $('.primary-card')[0].classList.add("bg-secondary")
+    i.classList.remove("dark-card", "text-white")
+  $('#option-card-for-' + c)[0].classList.add("dark-card", "text-white")
+  $('.primary-card')[0].classList.remove("dark-card", "text-white")
+  $('.primary-card')[0].classList.add("gray-card")
 
 
 @select_roleplay_option = ->
@@ -32,8 +32,8 @@
   optionarea.empty()
   optionarea.append(form.clone())
   for i in $('.option-card')
-    i.classList.remove("bg-dark", "text-white")
-  $('.primary-card')[0].classList.add("bg-dark", "text-white")
+    i.classList.remove("dark-card", "text-white")
+  $('.primary-card')[0].classList.add("dark-card", "text-white")
 
 jQuery(document).on 'turbolinks:load', ->
   #if there are any messages that need to be loaded into the messages screen AND THIS HAS NOT ALREADY BEEN DONE
@@ -100,7 +100,7 @@ window.process =(data, previous_from = null) ->
           $('#messages > .message-card:last .text-container').append("<br>" + content)
       else
         $('#messages').append(
-          "<div class=\"card bg-light rounded message-card message-entry\">\n" +
+          "<div class=\"card light-card rounded message-card message-entry\">\n" +
             "  <sender hidden>" + from + "</sender>" +
             "  <div class=\"card-block\">\n" +
             "    <div class=\"row\">\n" +

@@ -43,9 +43,31 @@
 
 .message-card {
   font-size: 18px;
+  background-color: rgba(255,255,255,.5);
 }
 
 .character_name
 {
   font-size: 18px;
+}
+
+.roleplay-card {
+  background-color: rgba(255,255,255,.5) !important;
+}
+
+#options-area {
+  background-color: rgba(255,255,255,.8);
+}
+
+.light-card {
+  background-color: rgba(248,249,250,.5) !important;
+}
+.gray-card {
+  background-color: rgba(150,154,157,.5) !important;
+}
+.dark-card {
+  background-color: rgba(52,58,64,.5) !important;
+}
+#add_character {
+  font-size: 40px;
 }

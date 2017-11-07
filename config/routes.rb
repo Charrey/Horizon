@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post '/roleplays/add_dummy/:id' => 'roleplays#add_dummy'
   get '/roleplay/new' => 'roleplays#new'
   get '/roleplays/message_to_append/:character_id', to: 'roleplays#message_to_append', as: 'message_to_append'
+  get '/roleplays/last_message_id/:roleplay_id', to: 'roleplays#last_message_id', as: 'last_message_id'
+  get '/roleplays/roleplay_messages/:roleplay_id', to: 'roleplays#roleplay_messages', as: 'roleplay_messages'
+
   resources :roleplays
  
   #messages controller
