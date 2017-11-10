@@ -8,8 +8,7 @@
     <div class="rounded" id="messages" data-roleplay-id="<%= @roleplay.id %>">      
       
     </div>
-        <div class="form-group">
-          Body:</br>
+        <div class="form-group my-2">
           <textarea id="message_body" class="form-control"></textarea>
           <small class="text-muted">From 2 to 1000 characters</small>
         </div>
@@ -47,10 +46,10 @@
     $("#message_body").val("");//empty the submit message so the new character can write its thoughts
   });
  
-  function load_messages()
+  function load_messages(id_of_last_message_i_have)
   {
     $("#messages").load('/roleplays/roleplay_messages/<%=@roleplay.id%>', function(data1){
-      $("#messages").scrollTop($("#messages")[0].scrollHeight);  
+      $("#messages").scrollTop($("#messages")[0].scrollHeight);
 
     });
   }
@@ -69,7 +68,7 @@
     
     setTimeout(check_and_load_messages, 1000);
   }
-  load_messages();
+  load_messages(-1);
   setTimeout(check_and_load_messages, 3000);
 
   $("#submit_field").click(function(){

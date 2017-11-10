@@ -93,6 +93,16 @@ class RoleplaysController < ApplicationController
   def roleplay_messages
     @roleplay = Roleplay.find(params[:roleplay_id])
     @messages = @roleplay.messages
+    @ghost_messages = []
+    @messages.each do |message|
+      if @ghost_messages.empty?
+        @ghost_messages.append(message)
+      elsif @ghost_messages.last.character == message.character
+        @ghost_messages.last.body = @ghost_messages.last.body + "<br>" + message.body
+      else
+        @ghost_messages.append(message)
+      end
+    end
     render :layout => false
   end
 
