@@ -16,7 +16,12 @@ class RoleplaysController < ApplicationController
   end
 
   def show
-    @roleplay = Roleplay.includes(:characters).find(params[:id])
+    begin
+      @roleplay = Roleplay.includes(:characters).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to '/dashboard'
+      return
+    end
     @my_characters = @roleplay.characters.where(user: current_user.id)
     @message = Message.new
   end
@@ -76,34 +81,43 @@ class RoleplaysController < ApplicationController
   def message_to_append
     @character_id = params[:character_id]
     @character = Character.find_by_id(@character_id)
-    render :layout => false
+    render layout: false
   end
 
   def save_message
     @character_id = Character.find_by_id(params[:character_id])
-
   end
 
   def last_message_id
     @roleplay_id = params[:roleplay_id]
+    roleplay = Roleplay.find(@roleplay_id)
+    unless roleplay.online?
+      render 'redirect_to_dashboard'
+      return
+    end
     @message_id = Message.last_message_id(@roleplay_id)
-    render :layout => false
+    render layout: false
   end
 
   def roleplay_messages
     @roleplay = Roleplay.find(params[:roleplay_id])
+    unless @roleplay.online?
+      render 'redirect_to_dashboard'
+      return
+    end
     @messages = @roleplay.messages
     @ghost_messages = []
     @messages.each do |message|
       if @ghost_messages.empty?
         @ghost_messages.append(message)
       elsif @ghost_messages.last.character == message.character
-        @ghost_messages.last.body = @ghost_messages.last.body + "<br>" + message.body
+        @ghost_messages.last.body = @ghost_messages.last.body + '<br>' + message.body
       else
         @ghost_messages.append(message)
       end
     end
-    render :layout => false
+    @lastid = @roleplay.messages.last.id
+    render layout: false
   end
 
   private
