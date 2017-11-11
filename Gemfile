@@ -47,8 +47,6 @@ gem 'jquery-turbolinks'
 
 gem 'devise'
 
-gem 'bootstrap-modal-rails'
-
 gem 'devise-bootstrap-views'
 
 
