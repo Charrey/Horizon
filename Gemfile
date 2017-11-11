@@ -39,6 +39,8 @@ gem 'public_suffix', '~> 3.0.0'
 
 gem 'bootstrap'
 
+gem 'bundler', '~> 1.16.0'
+
 gem 'redis', '~> 3.2'
 
 gem 'jquery-rails'
@@ -46,8 +48,6 @@ gem 'jquery-rails'
 gem 'jquery-turbolinks'
 
 gem 'devise'
-
-gem 'devise-bootstrap-views'
 
 
 group :development, :test do
@@ -68,4 +68,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
