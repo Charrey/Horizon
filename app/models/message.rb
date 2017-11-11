@@ -17,14 +17,18 @@ class Message < ApplicationRecord
     Message.create(character_id: @character_id, roleplay_id: @roleplay_id, body: @body)
   end
 
-  def self.last_message_id(roleplay_id)
-    @id = ""
-    @messages = Message.where(:roleplay_id => roleplay_id).order('created_at desc')
-    if @messages.size > 0 then
-      @id = @messages.first.id.to_s
+  def self.makeGhostMessages(messages)
+    ghost_messages = []
+    messages.each do |message|
+      if ghost_messages.empty?
+        ghost_messages.append(message)
+      elsif ghost_messages.last.character == message.character
+        ghost_messages.last.body = ghost_messages.last.body + '<br>' + message.body
+      else
+        ghost_messages.append(message)
+      end
     end
-
-    return @id
+    ghost_messages
   end
 
 end

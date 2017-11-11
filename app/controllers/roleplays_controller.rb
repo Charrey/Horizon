@@ -89,33 +89,16 @@ class RoleplaysController < ApplicationController
   end
 
   def last_message_id
-    @roleplay_id = params[:roleplay_id]
-    roleplay = Roleplay.find(@roleplay_id)
-    unless roleplay.online?
-      render 'redirect_to_dashboard'
-      return
-    end
-    @message_id = Message.last_message_id(@roleplay_id)
+    roleplay = Roleplay.find(params[:roleplay_id])
+    quit_if_offline(roleplay)
+    @message_id = roleplay.messages.last.id
     render layout: false
   end
 
   def roleplay_messages
-    @roleplay = Roleplay.find(params[:roleplay_id])
-    unless @roleplay.online?
-      render 'redirect_to_dashboard'
-      return
-    end
-    @messages = @roleplay.messages
-    @ghost_messages = []
-    @messages.each do |message|
-      if @ghost_messages.empty?
-        @ghost_messages.append(message)
-      elsif @ghost_messages.last.character == message.character
-        @ghost_messages.last.body = @ghost_messages.last.body + '<br>' + message.body
-      else
-        @ghost_messages.append(message)
-      end
-    end
+    @roleplay = Roleplay.includes(:messages).find(params[:roleplay_id])
+    quit_if_offline(@roleplay)
+    @ghost_messages = Message.makeGhostMessages(@roleplay.messages)
     @lastid = @roleplay.messages.last.id
     render layout: false
   end

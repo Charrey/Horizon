@@ -5,9 +5,13 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if devise_controller?
-      "devise"
+      'devise'
     else
-      "application"
+      'application'
     end
+  end
+
+  def quit_if_offline(roleplay)
+    render 'redirect_to_dashboard', layout: false unless roleplay.online?
   end
 end

@@ -13,6 +13,11 @@
           <small class="text-muted">From 2 to 1000 characters</small>
         </div>
         <div id="submit_field" class="btn btn-primary btn-lg">Submit message</div>
+    <br>
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" value="0" id="auto_checkbox">
+      Automatically send when Enter is pressed
+    </label>
 
 
   </div>
@@ -32,6 +37,9 @@
      <%end%>
   </div>
 </div>
+
+
+
 <script>
  $("#last_message_id").hide();
  $("#message_body").val("");
@@ -46,16 +54,14 @@
     $("#message_body").val("");//empty the submit message so the new character can write its thoughts
   });
  
-  function load_messages(id_of_last_message_i_have)
-  {
+  function load_messages(id_of_last_message_i_have) {
     $("#messages").load('/roleplays/roleplay_messages/<%=@roleplay.id%>', function(data1){
       $("#messages").scrollTop($("#messages")[0].scrollHeight);
 
     });
   }
 
-  function check_and_load_messages()
-  {
+  function check_and_load_messages() {
     var url = "/roleplays/last_message_id/<%=@roleplay.id%>";
     $.get(url, function(data){
      if(data != ""){ 
@@ -84,4 +90,12 @@
        });      
     });
   });
+
+ $('#auto_checkbox').change(function(){
+     if (this.checked) {
+         $('#submit_field').disabled = true
+     } else {
+         $('#submit_field').disabled = false
+     }
+ });
 </script>
